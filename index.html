@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Свадьба Ильяра и Наргиз</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(to bottom right, #fff0e6, #ffe6e1);
+      color: #3e2f2f;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    .video-intro {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: black;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #player {
+      width: 100%;
+      height: 100%;
+      max-height: 100vh;
+    }
+    .content {
+      display: none;
+      animation: fadeIn 2s ease forwards;
+      padding-bottom: 40px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    header {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 60px 20px 30px;
+      text-align: center;
+    }
+    header h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8em;
+      margin: 0;
+      color: #b46e4c;
+    }
+    header p {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+    .countdown {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+    section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .photo img {
+      width: 90vw;
+      max-width: 400px;
+      border-radius: 16px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+      margin: 20px auto;
+      display: block;
+      object-fit: cover;
+      height: auto;
+    }
+    .quote {
+      font-style: italic;
+      font-size: 1.2em;
+      margin: 30px auto;
+      max-width: 700px;
+      padding: 0 10px;
+    }
+    .about {
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .rsvp input, .rsvp textarea {
+      width: 100%;
+      max-width: 300px;
+      padding: 12px;
+      margin: 10px auto;
+      display: block;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1em;
+      font-family: inherit;
+    }
+    .rsvp button {
+      background: #b46e4c;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 1em;
+      font-family: inherit;
+      transition: background 0.3s ease;
+    }
+    .rsvp button:hover {
+      background: #9c5e3c;
+    }
+    footer {
+      background: #3e2f2f;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+    footer a {
+      color: #ffd6c4;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .details {
+      background: #f3e0d2;
+      padding: 30px 20px;
+      border-radius: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      text-align: left;
+      font-size: 1em;
+      line-height: 1.5;
+    }
+
+    /* Поднимаем пожелания выше — они идут первым блоком */
+
+    /* Адаптивность */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2em;
+      }
+      .quote {
+        font-size: 1em;
+        padding: 0 10px;
+      }
+      .details {
+        padding: 20px 15px;
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="video-intro" id="video-intro" aria-label="Видеоприветствие">
+    <div id="player"></div>
+  </div>
+
+  <div class="content" id="main-content" role="main" aria-label="Основное содержимое">
+    <section class="details" aria-label="Детали и пожелания">
+      <h2>Детали & Пожелания</h2>
+      <p>🎁 Подарки — в конверте, а добрые слова — в сердцах!</p>
+      <p>🌸 Не приносите цветы — ваша улыбка лучший букет.</p>
+      <p>
+        📍 Место: г. Алматы, Тайбагар 1 <br />
+        <a href="https://2gis.kz/almaty/gallery/geo/70000001033228209/photoId/30258560229338519" target="_blank" rel="noopener noreferrer">Посмотреть на карте</a>
+      </p>
+      <p>📞 Вопросы? Обращайтесь к нашему организатору Саида: +7 (700) 0909109</p>
+    </section>
+
+    <header>
+      <h1>Ильяр & Наргиз</h1>
+      <p><strong>12 июля 2025</strong> — <em>г. Алматы, 16:00</em></p>
+      <p class="countdown" id="countdown" aria-live="polite" aria-atomic="true"></p>
+    </header>
+
+    <section class="photo" aria-label="Фото пары">
+      <img src="https://photos.fife.usercontent.google.com/pw/AP1GczOl1yLe8J3ll9s6cU-d5NONMmpJTTEkLhwaRGdVdF48yCNmfUDgk7xr=w717-h956-s-no-gm?authuser=0" alt="Фото Ильяра и Наргиз" />
+      <img src="https://photos.fife.usercontent.google.com/pw/AP1GczOl1yLe8J3ll9s6cU-d5NONMmpJTTEkLhwaRGdVdF48yCNmfUDgk7xr=w717-h956-s-no-gm?authuser=0" alt="Фото Ильяра и Наргиз" />
+    </section>
+
+    <section>
+      <h2>Наша история</h2>
+      <p class="about">Случайная встреча обернулась чудом. Мы счастливы начать новую главу жизни вместе с вами ❤️</p>
+    </section>
+
+    <section class="quote" aria-label="Цитата о любви">
+      <h2>"Любовь — это когда ты дома, даже если вы где-то далеко."</h2>
+    </section>
+
+    <section>
+      <h2>RSVP — Подтвердите участие</h2>
+      <form
+        class="rsvp"
+        action="mailto:vid-00@mail.ru"
+        method="POST"
+        enctype="text/plain"
+        aria-label="Форма подтверждения участия в свадьбе"
+      >
+        <input type="text" name="Имя" placeholder="Ваше имя" required aria-required="true" />
+        <input type="email" name="Email" placeholder="Ваш email" required aria-required="true" />
+        <textarea name="Комментарий" placeholder="Ваши пожелания или вопросы" rows="3"></textarea>
+        <button type="submit">Отправить</button>
+      </form>
+    </section>
+  </div>
+
+  <footer role="contentinfo">
+    © 2025 Ильяр и Наргиз. Все права защищены.
+  </footer>
+
+  <script>
+    // Загрузка YouTube API
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '100%',
+        width: '100%',
+        videoId: '2Z4m4lnjxkY', // <-- сюда вставьте ID вашего видео с YouTube
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          iv_load_policy: 3,
+          disablekb: 1,
+          playsinline: 1,
+          fs: 0,
+          mute: 0
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      event.target.playVideo();
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.ENDED) {
+        document.getElementById('video-intro').style.display = 'none';
+        var mainContent = document.getElementById('main-content');
+        mainContent.style.display = 'block';
+      }
+    }
+
+    // Обратный отсчёт
+    const countdownElem = document.getElementById('countdown');
+    const weddingDate = new Date('2025-07-12T16:00:00+06:00');
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = weddingDate - now;
+      if (diff <= 0) {
+        countdownElem.textContent = 'Сегодня наш день! 🎉';
+        clearInterval(timer);
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      countdownElem.textContent = `До свадьбы осталось: ${days} дней ${hours} часов ${minutes} минут`;
+    }
+
+    updateCountdown();
+    var timer = setInterval(updateCountdown, 60000);
+  </script>
+</body>
+</html>
+
